@@ -1,8 +1,12 @@
 package com.vithal.code.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +30,9 @@ public class User {
 	private String city;
 	private String country;
 	private String email;
+	
+	@Transient
+	private List<Department> deprts=new ArrayList<>();
 	
 	
 	

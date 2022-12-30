@@ -56,6 +56,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 repo.deleteById(dId);
 		
 	}
+
+	@Override
+	public List<Department> getDeprtsByuserId(String uId) {
+	List<Department> findByUId = repo.findByuId(uId);
+		return findByUId;
+	}
 	
 	
 }

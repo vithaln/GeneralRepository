@@ -26,4 +26,8 @@ public interface DepartmentService {
 	//delete deprtmenst
 	
 	void deleteDepartment(String dId);
+	
+	//find departments by userId
+	
+	List<Department> getDeprtsByuserId(String uId);
 }

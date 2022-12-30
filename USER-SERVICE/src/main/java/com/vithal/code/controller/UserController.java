@@ -38,6 +38,7 @@ public class UserController {
 		
 		return new ResponseEntity<List<User>>(allusers,HttpStatus.OK);
 	}
+	//get users by userId
 	@GetMapping("/{uid}")
 	public ResponseEntity<User>getSingleUser(@PathVariable String uid){
 		

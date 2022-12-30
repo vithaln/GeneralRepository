@@ -67,4 +67,14 @@ public class DepartmentController {
 		return new ResponseEntity<Department>(updatedepartmenst, HttpStatus.OK);
 	}
 
+	//find deprts by UId
+	// get single deprts
+		@GetMapping("user/{uId}")
+		public ResponseEntity<List<Department>> getSingleDeprtsByUserId(@PathVariable String uId) {
+			List<Department> deprtsByuserId = departmentService.getDeprtsByuserId(uId);
+
+		//	return new ResponseEntity<Department>(deprtsByuserId, HttpStatus.OK);
+			return ResponseEntity.ok(deprtsByuserId);
+		}
+
 }

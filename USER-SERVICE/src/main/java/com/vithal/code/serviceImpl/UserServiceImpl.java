@@ -1,21 +1,35 @@
 package com.vithal.code.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.netflix.discovery.converters.Auto;
+import com.vithal.code.entity.Department;
 import com.vithal.code.entity.User;
 import com.vithal.code.exceptions.UserNotFoundException;
 import com.vithal.code.repository.UserRepo;
 import com.vithal.code.service.UserServcie;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserServiceImpl implements UserServcie{
 
+	@Value("${department.base.value}")
+	private String DEPRT_BASE_URL;
+	
 	@Autowired
 	private UserRepo repo;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	
 	@Override
@@ -37,6 +51,11 @@ public class UserServiceImpl implements UserServcie{
 	public User getSingleUser(String uId) {
 		User user = repo.findById(uId).orElseThrow(()->new UserNotFoundException("User Not Found by using this Id-->"+uId));
 		
+		log.info("USER==> {} ",user);
+		 ArrayList deprts = restTemplate.getForObject(DEPRT_BASE_URL+user.getUId(), ArrayList.class);
+		
+		user.setDeprts(deprts);
+		log.info("Departments==>> {} ",user);
 		return user;
 	}
 
