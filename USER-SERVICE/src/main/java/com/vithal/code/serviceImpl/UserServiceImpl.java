@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.netflix.discovery.converters.Auto;
+import com.vithal.code.DepartemntServiceConfig;
 import com.vithal.code.entity.Department;
 import com.vithal.code.entity.User;
 import com.vithal.code.exceptions.UserNotFoundException;
@@ -24,6 +25,10 @@ public class UserServiceImpl implements UserServcie{
 
 	@Value("${department.base.value}")
 	private String DEPRT_BASE_URL;
+	
+	
+	@Autowired
+	private DepartemntServiceConfig config;
 	
 	@Autowired
 	private UserRepo repo;
@@ -52,10 +57,18 @@ public class UserServiceImpl implements UserServcie{
 		User user = repo.findById(uId).orElseThrow(()->new UserNotFoundException("User Not Found by using this Id-->"+uId));
 		
 		log.info("USER==> {} ",user);
-		 ArrayList deprts = restTemplate.getForObject(DEPRT_BASE_URL+user.getUId(), ArrayList.class);
 		
+		//calling other service
+		 ArrayList deprts = restTemplate.getForObject(DEPRT_BASE_URL+user.getUId(), ArrayList.class);
 		user.setDeprts(deprts);
+		
+		// Department departmentsBydepartlId = config.getDepartmentsBydepartlId("DEPRT_BASE_URL"+user.getUId());
+		
+	//	user.setDeprts(departmentsBydepartlId);
+		
 		log.info("Departments==>> {} ",user);
+		
+		
 		return user;
 	}
 

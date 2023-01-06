@@ -8,5 +8,6 @@ import com.vithal.code.entity.Department;
 
 public interface DepartmenRepo extends JpaRepository<Department, String> {
 
+	//custom method
 	List<Department> findByuId(String uId);
 }
